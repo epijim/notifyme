@@ -1,6 +1,6 @@
-# episheet
+# notifyme
 
-R functions for Modern Epidemiology.
+R functions to senf notifications from R.
 
 ## CRAN details
 
