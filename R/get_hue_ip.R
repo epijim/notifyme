@@ -15,6 +15,8 @@
 #' \dontrun{get_hue_ip()}
 
 get_hue_ip <- function(){
+  . <- NULL
+
   # IP address of bridge
   # get IP from discovery service
   bridge_ip <- readLines(

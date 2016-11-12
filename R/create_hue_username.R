@@ -17,6 +17,8 @@
 create_hue_username <- function(
   bridge_ip = NULL
 ){
+  . <- NULL
+
   username <- httr::POST(
     url = paste0("http://",bridge_ip,"/api"),
     body = '{"devicetype":"my_hue_app#r notifyme"}',
