@@ -1,6 +1,6 @@
 Package: notifyme
 Type: Package
-Title: Send alerts to your cellphone and Phillips Hue lights
+Title: Send Alerts to your Cellphone and Phillips Hue Lights
 Version: 0.1.0
 Authors@R: c(
     person("James", "Black", , "james@epijim.uk", c("aut", "cre","cph"))
@@ -20,4 +20,3 @@ Imports:
   magrittr,
   dplyr,
   httr
-VignetteBuilder: knitr
