@@ -1,10 +1,9 @@
 #' Get the internal IP address of your Hue bridge
 #'
-#' Plot the p-value function for one or two confidence interval pairs.
-#' See following for example of the use in the literature:
-#' Is flutamide effective in patients with bilateral orchiectomy?
-#' Rothman, Kenneth J et al.
-#' The Lancet , Volume 353 , Issue 9159 , 1184
+#' This function uses the bridge UPNP service to get the internal IP address
+#' of your hue hub. You need to be on the same network, else you'll get an error.
+#' This is not the only method to get the bridge's ip address, but is probably the easiest.
+#' This function has no parameters/inputs.
 #'
 #' @section Bugs:
 #' Code repo: \url{https://github.com/epijim/notifyme}
@@ -13,7 +12,7 @@
 #' @export
 #' @importFrom magrittr "%>%"
 #' @examples
-#' get_hue_ip()
+#' \dontrun{get_hue_ip()}
 
 get_hue_ip <- function(){
   # IP address of bridge
