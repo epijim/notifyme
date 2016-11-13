@@ -3,6 +3,8 @@
 export(create_hue_username)
 export(get_hue_ip)
 export(get_light_info)
+export(get_private_keys)
 export(hue_flashlights)
+export(save_private_keys)
 export(send_push_notification)
 importFrom(magrittr,"%>%")
