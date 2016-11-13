@@ -6,7 +6,7 @@
 \usage{
 send_push_notification(title = "Your R session says:",
   message = paste0("Message sent: ", Sys.time()), api_token = NULL,
-  user_key = NULL, priority = "medium")
+  user_key = NULL, priority = "medium", file = "~/r_keychain.rds")
 }
 \arguments{
 \item{title}{Title of the push notification. Defaults to message from r.}
@@ -18,6 +18,8 @@ send_push_notification(title = "Your R session says:",
 \item{user_key}{This is the key that identifies you. It's on the pushover.net dashboard.}
 
 \item{priority}{'low' means no beep/vibrate, 'medium' means beep/vibrate, 'high' means require response on device.}
+
+\item{file}{Optional - location of keychain if using.}
 }
 \description{
 This function will send a push notification to your device via the

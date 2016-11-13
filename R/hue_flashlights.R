@@ -12,6 +12,7 @@
 #' @param username Username for connecting to hue bridge
 #' @param flashes Number of times to flash the lights on and off
 #' @param light_info Optional, must be output of get_light_info - if included the function will turn the lights red. The table tells it what state to then reset the lights to.
+#' @param file optional location of the keychain, if using
 #' @keywords R Hue notify
 #' @export
 #' @importFrom magrittr "%>%"
@@ -22,12 +23,35 @@ hue_flashlights <- function(
   bridge_ip = NULL,
   username = NULL,
   light_info = NULL,
-  flashes = 3
+  flashes = 3,
+  file = "~/r_keychain.rds"
 ){
   # avoid missing objects in namespace
     hue <- NULL
     lights <- NULL
     . <- NULL
+
+  # if vars missing, see if saved in keychain
+    # if file exists, load it
+    if (
+      (is.null(bridge_ip) | is.null(username)) & file.exists(file)) {
+
+      # check present
+        if (!"hue_ip" %in% readRDS(file)$api_var) stop("hue_ip missing from keychain")
+        if (!"hue_username" %in% readRDS(file)$api_var) stop("hue_username missing from keychain")
+      # get ip
+      bridge_ip <- get_private_keys(
+        api_var = "hue_ip",
+        file = "~/r_keychain.rds"
+      )
+      # get api username
+      username <- get_private_keys(
+        api_var = "hue_username",
+        file = "~/r_keychain.rds"
+      )
+    }
+
+
   # make the lights red, flash, then return
     if (!is.null(light_info)) {
       # get coloured lights

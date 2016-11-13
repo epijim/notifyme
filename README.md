@@ -1,6 +1,6 @@
 # notifyme
 
-R functions to send notifications from R. Currently only to Phillips Hue lights.
+R functions to send notifications from R, either to phillips hue lights, or your ios/android device.
 
 Next step is to set up texts.
 
