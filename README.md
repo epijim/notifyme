@@ -1,6 +1,8 @@
 # notifyme
 
-R functions to senf notifications from R.
+R functions to send notifications from R. Currently only to Phillips Hue lights.
+
+Next step is to set up texts.
 
 ## CRAN details
 

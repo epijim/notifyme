@@ -1,7 +1,7 @@
 Package: notifyme
 Type: Package
 Title: Send Alerts to your Cellphone and Phillips Hue Lights
-Version: 0.1.0
+Version: 0.2.0
 Authors@R: c(
     person("James", "Black", , "james@epijim.uk", c("aut", "cre","cph"))
     )
