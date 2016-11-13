@@ -5,7 +5,7 @@
 \title{Flash all the lights connected to your hub}
 \usage{
 hue_flashlights(bridge_ip = NULL, username = NULL, light_info = NULL,
-  flashes = 3)
+  flashes = 3, file = "~/r_keychain.rds")
 }
 \arguments{
 \item{bridge_ip}{Internal IP address of your hue bridge}
@@ -15,6 +15,8 @@ hue_flashlights(bridge_ip = NULL, username = NULL, light_info = NULL,
 \item{light_info}{Optional, must be output of get_light_info - if included the function will turn the lights red. The table tells it what state to then reset the lights to.}
 
 \item{flashes}{Number of times to flash the lights on and off}
+
+\item{file}{optional location of the keychain, if using}
 }
 \description{
 This function will flash the lights off and on a specified number of times. Currently,

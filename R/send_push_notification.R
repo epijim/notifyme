@@ -12,6 +12,7 @@
 #' @param api_token API token - create your own in a few minutes from pushover.net dashboard.
 #' @param user_key This is the key that identifies you. It's on the pushover.net dashboard.
 #' @param priority 'low' means no beep/vibrate, 'medium' means beep/vibrate, 'high' means require response on device.
+#' @param file Optional - location of keychain if using.
 #' @keywords R Hue notify pushover
 #' @export
 #' @importFrom magrittr "%>%"
@@ -23,9 +24,11 @@ send_push_notification <- function (
   message = paste0("Message sent: ",Sys.time()),
   api_token = NULL,
   user_key = NULL,
-  priority = "medium"
+  priority = "medium",
+  file = "~/r_keychain.rds"
 ){
   {
+  # set priority
     switch(priority,
            low = {
              priority <- "-1"
@@ -38,6 +41,29 @@ send_push_notification <- function (
            },
            stop("For priority, please enter 'low', 'medium' or 'high'")
     )
+
+  # if vars missing, see if saved in keychain
+    # if file exists, load it
+    if (
+      (is.null(api_token) | is.null(user_key)) & file.exists(file)) {
+      # check present
+        if (!"pushover_userkey" %in% readRDS(file)$api_var) stop("hue_ip missing from keychain")
+        if (!"pushover_apitoken" %in% readRDS(file)$api_var) stop("hue_username missing from keychain")
+
+      # get key
+        user_key <- get_private_keys(
+          api_var = "pushover_userkey",
+          file = "~/r_keychain.rds"
+        )
+        # get api token
+        api_token <- get_private_keys(
+          api_var = "pushover_apitoken",
+          file = "~/r_keychain.rds"
+        )
+    }
+
+
+  # response
 
     response <- httr::POST(
       "https://api.pushover.net/1/messages.json",
