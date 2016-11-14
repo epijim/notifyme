@@ -1,9 +1,7 @@
 #' Flash all the lights connected to your hub
 #'
 #' This function will flash the lights off and on a specified number of times. Currently,
-#' it will effect all lights connected to the hub. If light_info is provided, it will also
-#' turn all the lights red before flashing the lights, then it will reset the lights back to
-#' their previous state afterwards.
+#' it will effect all lights connected to the hub.
 #'
 #' @section Bugs:
 #' Code repo: \url{https://github.com/epijim/notifyme}
@@ -11,8 +9,8 @@
 #' @param bridge_ip Internal IP address of your hue bridge
 #' @param username Username for connecting to hue bridge
 #' @param flashes Number of times to flash the lights on and off
-#' @param light_info Optional, must be output of get_light_info - if included the function will turn the lights red. The table tells it what state to then reset the lights to.
 #' @param file optional location of the keychain, if using
+#' @param flash_red Do you want the lights to turn red before flashing?
 #' @keywords R Hue notify
 #' @export
 #' @importFrom magrittr "%>%"
@@ -22,8 +20,8 @@
 hue_flashlights <- function(
   bridge_ip = NULL,
   username = NULL,
-  light_info = NULL,
   flashes = 3,
+  flash_red = TRUE,
   file = "~/r_keychain.rds"
 ){
   # avoid missing objects in namespace
@@ -53,9 +51,11 @@ hue_flashlights <- function(
 
 
   # make the lights red, flash, then return
-    if (!is.null(light_info)) {
+    if (flash_red) {
       # get coloured lights
-      colouredlights <- light_info %>%
+      colouredlights <- get_light_info(
+        bridge_ip,username
+        ) %>%
         dplyr::filter(hue >= 0)
       # make red
       for(i in colouredlights$id){
@@ -92,7 +92,7 @@ hue_flashlights <- function(
     }
 
   # return to last colour
-    if (!is.null(light_info)) {
+    if (flash_red) {
       for(i in colouredlights$id){
         # reset colour
         httr::PUT(
