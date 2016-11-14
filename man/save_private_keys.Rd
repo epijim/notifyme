@@ -24,8 +24,17 @@ file parameter. If it doesn't find it, it will make one.
 This function WILL NOT actually save the file. Instead, it will return a dataframe with the keys,
 and give you the code to save the file to your system.
 
-The intended use is store API keys in the home space
+The intended use is store API keys in the home space.
 }
+\section{Intended use}{
+
+Save variables in a way that can automatically get read in by my other functions in this package.
+For the hue lights the variables I expect to see in api_var are  "hue_ip" and "hue_username", while
+for pushover, the variables I expect to see are "pushover_userkey" and "pushover_apitoken".
+
+See the example for a use example.
+}
+
 \section{Bugs}{
 
 Code repo: \url{https://github.com/epijim/notifyme}
