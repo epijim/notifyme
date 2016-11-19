@@ -23,4 +23,9 @@ Next step is to set up texts.
     <td><strong>Total downloads from CRAN</strong><p><sup>Because....vanity</sup></p></td>
     <td><img src="http://cranlogs.r-pkg.org/badges/grand-total/notifyme" alt="Badge"></td>
   </tr>
+  <tr>
+    <td><strong>Documentation</strong><p><sup>What functions?</sup></p></td>
+    <td><a href="http://www.rdocumentation.org/packages/notifyme">Link</a>
+<img src="http://www.rdocumentation.org/badges/version/notifyme" alt="http://www.rdocumentation.org/packages/notifyme"></td>
+  </tr>
 </table>
