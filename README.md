@@ -25,7 +25,8 @@ Next step is to set up texts.
   </tr>
   <tr>
     <td><strong>Documentation</strong><p><sup>What functions?</sup></p></td>
-    <td><a href="http://www.rdocumentation.org/packages/notifyme">Link</a>
+    <td><a href="http://www.rdocumentation.org/packages/notifyme">
 <img src="http://www.rdocumentation.org/badges/version/notifyme" alt="http://www.rdocumentation.org/packages/notifyme"></td>
+    </a>
   </tr>
 </table>
