@@ -11,6 +11,7 @@
 #' @param flashes Number of times to flash the lights on and off
 #' @param file optional location of the keychain, if using
 #' @param flash_red Do you want the lights to turn red before flashing?
+#' @param light_name If you want to flash ONE light, give it's name here as a character vector. Name is the actual name 'e.g. hallway', not the id number.
 #' @keywords R Hue notify
 #' @export
 #' @importFrom magrittr "%>%"
@@ -28,6 +29,7 @@ hue_flashlights <- function(
   # avoid missing objects in namespace
     hue <- NULL
     lights <- NULL
+    name <- NULL
     . <- NULL
 
   # if vars missing, see if saved in keychain
@@ -52,7 +54,7 @@ hue_flashlights <- function(
 
   # get light info if needed
     # get coloured lights
-    if (flash_red) {
+    if (flash_red | !is.null(light_name)) {
       colouredlights <- get_light_info(
         bridge_ip,username
         ) %>%
@@ -66,7 +68,7 @@ hue_flashlights <- function(
 
 
   # make the lights red, flash, then return
-    if (flash_red) {
+    if (flash_red | !is.null(light_name)) {
       # make red
       for(i in colouredlights$id){
         httr::PUT(
@@ -88,6 +90,7 @@ hue_flashlights <- function(
   # flash
     message("Flashing lights")
     # flash all
+    if (is.null(light_name)){
       for(i in 1:flashes){
         httr::PUT(
           url = paste0(
@@ -101,23 +104,25 @@ hue_flashlights <- function(
         )
         Sys.sleep(1.3)
       }
+    } else {
     # flash specific
-    for(i in 1:flashes){
-      httr::PUT(
-        url = paste0(
-          "http://",
-          bridge_ip,
-          "/api/",
-          username,
-          "/lights//action"
-        ),
-        body = '{"alert":"select"}'
-      )
-      Sys.sleep(1.3)
+      for(i in 1:flashes){
+        httr::PUT(
+          url = paste0(
+            "http://",
+            bridge_ip,
+            "/api/",
+            username,
+            "/lights/",colouredlights[1,"id"],"/state"
+          ),
+          body = '{"alert":"select"}'
+        )
+        Sys.sleep(1.3)
+      }
     }
 
   # return to last colour
-    if (flash_red) {
+    if (flash_red | !is.null(light_name)) {
       for(i in colouredlights$id){
         # reset colour
         httr::PUT(
@@ -130,10 +135,10 @@ hue_flashlights <- function(
             "/state"
           ),
           body = paste0(
-            '{"hue":',colouredlights$hue[colouredlights$id==i],'}')
+            '{"hue":',i,'}')
         )
         # reset state
-        Sys.sleep(0.5)
+        Sys.sleep(0.3)
         httr::PUT(
           url = paste0(
             "http://",
@@ -146,7 +151,7 @@ hue_flashlights <- function(
           body = paste0(
             '{"on":',tolower(colouredlights$current[colouredlights$id==i]),'}')
         )
-        Sys.sleep(0.5)
+        Sys.sleep(0.3)
       }
     }
 }

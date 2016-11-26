@@ -1,4 +1,6 @@
-## 0.2.0 update
+## 0.3.0 update
+
+First update was too soon, so rejected. Futher tested for a couple of weeks, then resubmitting. 
 
 Integrated keychain into the functions.
 

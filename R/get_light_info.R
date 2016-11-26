@@ -9,6 +9,7 @@
 #'
 #' @param bridge_ip Internal IP address of your hue bridge
 #' @param username Username for connecting to hue bridge
+#' @param file If the file listed here exists, it will try and use the private keys created by the function save_private_keys(). Just ignore if you want to manually give your bridge ip and username.
 #' @keywords R Hue notify
 #' @export
 #' @importFrom magrittr "%>%"

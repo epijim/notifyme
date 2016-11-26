@@ -4,12 +4,15 @@
 \alias{get_light_info}
 \title{Get info on lights connected to your Hue hub}
 \usage{
-get_light_info(bridge_ip = NULL, username = NULL)
+get_light_info(bridge_ip = NULL, username = NULL,
+  file = "~/r_keychain.rds")
 }
 \arguments{
 \item{bridge_ip}{Internal IP address of your hue bridge}
 
 \item{username}{Username for connecting to hue bridge}
+
+\item{file}{If the file listed here exists, it will try and use the private keys created by the function save_private_keys(). Just ignore if you want to manually give your bridge ip and username.}
 }
 \description{
 This will return a dataframe containing information about the lights
