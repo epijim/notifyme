@@ -9,6 +9,7 @@
 #'
 #' @param bridge_ip Internal IP address of your hue bridge
 #' @param username Username for connecting to hue bridge
+#' @param file If the file listed here exists, it will try and use the private keys created by the function save_private_keys(). Just ignore if you want to manually give your bridge ip and username.
 #' @keywords R Hue notify
 #' @export
 #' @importFrom magrittr "%>%"
@@ -17,8 +18,29 @@
 
 get_light_info <- function(
   bridge_ip = NULL,
-  username = NULL
+  username = NULL,
+  file = "~/r_keychain.rds"
 ){
+  # if vars missing, see if saved in keychain
+  # if file exists, load it
+  if (
+    (is.null(bridge_ip) | is.null(username)) & file.exists(file)) {
+
+    # check present
+    if (!"hue_ip" %in% readRDS(file)$api_var) stop("hue_ip missing from keychain")
+    if (!"hue_username" %in% readRDS(file)$api_var) stop("hue_username missing from keychain")
+    # get ip
+    bridge_ip <- get_private_keys(
+      api_var = "hue_ip",
+      file = "~/r_keychain.rds"
+    )
+    # get api username
+    username <- get_private_keys(
+      api_var = "hue_username",
+      file = "~/r_keychain.rds"
+    )
+  }
+
   # pull down data on lights in bridge
     lights_list <- httr::GET(
         url = paste0(

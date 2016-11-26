@@ -4,8 +4,8 @@
 \alias{hue_flashlights}
 \title{Flash all the lights connected to your hub}
 \usage{
-hue_flashlights(bridge_ip = NULL, username = NULL, flashes = 3,
-  flash_red = TRUE, file = "~/r_keychain.rds")
+hue_flashlights(bridge_ip = NULL, username = NULL, flashes = 10,
+  flash_red = TRUE, light_name = NULL, file = "~/r_keychain.rds")
 }
 \arguments{
 \item{bridge_ip}{Internal IP address of your hue bridge}
@@ -15,6 +15,8 @@ hue_flashlights(bridge_ip = NULL, username = NULL, flashes = 3,
 \item{flashes}{Number of times to flash the lights on and off}
 
 \item{flash_red}{Do you want the lights to turn red before flashing?}
+
+\item{light_name}{If you want to flash ONE light, give it's name here as a character vector. Name is the actual name 'e.g. hallway', not the id number.}
 
 \item{file}{optional location of the keychain, if using}
 }
