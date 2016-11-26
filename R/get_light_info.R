@@ -17,8 +17,29 @@
 
 get_light_info <- function(
   bridge_ip = NULL,
-  username = NULL
+  username = NULL,
+  file = "~/r_keychain.rds"
 ){
+  # if vars missing, see if saved in keychain
+  # if file exists, load it
+  if (
+    (is.null(bridge_ip) | is.null(username)) & file.exists(file)) {
+
+    # check present
+    if (!"hue_ip" %in% readRDS(file)$api_var) stop("hue_ip missing from keychain")
+    if (!"hue_username" %in% readRDS(file)$api_var) stop("hue_username missing from keychain")
+    # get ip
+    bridge_ip <- get_private_keys(
+      api_var = "hue_ip",
+      file = "~/r_keychain.rds"
+    )
+    # get api username
+    username <- get_private_keys(
+      api_var = "hue_username",
+      file = "~/r_keychain.rds"
+    )
+  }
+
   # pull down data on lights in bridge
     lights_list <- httr::GET(
         url = paste0(

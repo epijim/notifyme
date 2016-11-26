@@ -20,8 +20,9 @@
 hue_flashlights <- function(
   bridge_ip = NULL,
   username = NULL,
-  flashes = 3,
+  flashes = 10,
   flash_red = TRUE,
+  light_name = NULL,
   file = "~/r_keychain.rds"
 ){
   # avoid missing objects in namespace
@@ -49,14 +50,23 @@ hue_flashlights <- function(
       )
     }
 
-
-  # make the lights red, flash, then return
+  # get light info if needed
+    # get coloured lights
     if (flash_red) {
-      # get coloured lights
       colouredlights <- get_light_info(
         bridge_ip,username
         ) %>%
         dplyr::filter(hue >= 0)
+    }
+    # if a specific light asked for, filter to it
+    if (!is.null(light_name)) {
+      colouredlights <- colouredlights %>%
+        dplyr::filter(name %in% light_name)
+    }
+
+
+  # make the lights red, flash, then return
+    if (flash_red) {
       # make red
       for(i in colouredlights$id){
         httr::PUT(
@@ -77,6 +87,21 @@ hue_flashlights <- function(
 
   # flash
     message("Flashing lights")
+    # flash all
+      for(i in 1:flashes){
+        httr::PUT(
+          url = paste0(
+            "http://",
+            bridge_ip,
+            "/api/",
+            username,
+            "/groups/0/action"
+          ),
+          body = '{"alert":"select"}'
+        )
+        Sys.sleep(1.3)
+      }
+    # flash specific
     for(i in 1:flashes){
       httr::PUT(
         url = paste0(
@@ -84,7 +109,7 @@ hue_flashlights <- function(
           bridge_ip,
           "/api/",
           username,
-          "/groups/0/action"
+          "/lights//action"
         ),
         body = '{"alert":"select"}'
       )
